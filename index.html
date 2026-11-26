@@ -1,0 +1,20 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>تطبيقاتي</title>
+<style>
+body{margin:0;font-family:system-ui,"Noto Naskh Arabic",sans-serif;background:linear-gradient(160deg,#0e2a47,#16406b);color:#fff;min-height:100vh}
+header{padding:36px 20px 10px;text-align:center}h1{margin:0;font-size:28px;color:#f1cf7a}p.s{opacity:.75;margin:6px 0 0}
+main{max-width:560px;margin:18px auto;padding:0 16px 40px}
+.card{background:rgba(255,255,255,.09);border:1px solid rgba(241,207,122,.35);border-radius:18px;padding:16px 18px;margin-bottom:14px;backdrop-filter:blur(8px)}
+.card h2{margin:0 0 4px;font-size:20px}.meta{opacity:.7;font-size:13px;margin-bottom:12px}
+a.btn{display:inline-block;background:#e3b95a;color:#3b2503;text-decoration:none;font-weight:700;padding:10px 20px;border-radius:12px}
+.empty{text-align:center;opacity:.7;padding:30px}
+</style></head><body>
+<header><h1>تطبيقاتي</h1><p class="s">حمّل آخر نسخة من كل تطبيق</p></header>
+<main id="list"><div class="empty">جاري التحميل...</div></main>
+<script>
+fetch('apps.json?'+Date.now()).then(r=>r.json()).then(d=>{
+ const el=document.getElementById('list');
+ if(!d.apps.length){el.innerHTML='<div class="empty">لا توجد تطبيقات بعد</div>';return}
+ el.innerHTML=d.apps.map(a=>`<div class="card"><h2>${a.name}</h2><div class="meta">النسخة ${a.version} · ${a.size} · ${a.date}</div><a class="btn" href="${a.file}" download>تحميل</a></div>`).join('')
+}).catch(()=>{document.getElementById('list').innerHTML='<div class="empty">تعذر تحميل القائمة</div>'});
+</script></body></html>
